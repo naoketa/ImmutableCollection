@@ -51,7 +51,7 @@ class ListSpec extends AnyFunSpec {
         assert(xs.tail.tail == EmptyList)
       }
 
-      it("should return the reversed list the list when reverse") {
+      it("should return the reversed list when reverse") {
         val xs: List[Int] = List.reverse(List(1, 2, 3, 4))
         assert(xs.head === 4)
         assert(xs.tail.head === 3)
