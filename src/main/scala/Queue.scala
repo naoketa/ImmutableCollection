@@ -23,11 +23,11 @@ final case class NonEmptyQueue[T](front: List[T], back: List[T]) extends Queue[T
 
   override def enQueue(item: T): Queue[T] = NonEmptyQueue(front, back.add(item))
 
-  override def deQueue(): Queue[T] = this match {
-    case _ if front.isEmpty && back.tail.isEmpty => EmptyQueue()
-    case _ if front.isEmpty => NonEmptyQueue(List.reverse(back).tail, List())
-    case _ if front.tail.isEmpty && back.isEmpty => EmptyQueue()
-    case _ if front.tail.isEmpty => NonEmptyQueue(List.reverse(back), List())
+  override def deQueue(): Queue[T] = (front, back) match {
+    case (EmptyList, NonEmptyList(_, EmptyList)) => EmptyQueue()
+    case (EmptyList, _) => NonEmptyQueue(List.reverse(back).tail, List())
+    case (NonEmptyList(_, EmptyList), EmptyList) => EmptyQueue()
+    case (NonEmptyList(_, EmptyList), _) => NonEmptyQueue(List.reverse(back), List())
     case _ => NonEmptyQueue(front.tail, back)
   }
 
